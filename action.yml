@@ -21,7 +21,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - using: pdm-project/setup-pdm@v2
+    - uses: pdm-project/setup-pdm@v2
 
     - name: "Update dependencies"
       run: pdm update --no-sync --update-${{ inputs.update-strategy }}
