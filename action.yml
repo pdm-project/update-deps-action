@@ -25,8 +25,10 @@ runs:
 
     - name: "Update dependencies"
       run: pdm update --no-sync --update-${{ inputs.update-strategy }}
+      shell: bash
 
     - id: detect-changes
+      shell: bash
       run: |
         if [[ `git status --porcelain` ]]; then
           echo "::set-output name=changed::true"
@@ -44,6 +46,7 @@ runs:
     - name: "Create PR"
       if: steps.detect-changes.outputs.changed == 'true'
       run: gh pr create --title "${{ inputs.pr-title }}" --body "Update pdm.lock" --head dep/update-pdm-lock
+      shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
 
