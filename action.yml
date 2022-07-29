@@ -1,0 +1,52 @@
+name: "PDM update dependencies"
+description: "Update the pdm.lock file"
+inputs:
+  token:
+    description: "A personal access token"
+    required: false
+    default: ${{ github.token }}
+  commit-message:
+    description: "The commit message"
+    required: false
+    default: "chore: Update pdm.lock"
+  pr-title:
+    description: "The PR title"
+    required: false
+    default: "chore: Update pdm.lock"
+  update-strategy:
+    description: "The update strategy, can be 'reuse', 'eager' or 'all'"
+    required: false
+    default: "reuse"
+
+runs:
+  using: "composite"
+  steps:
+    - using: pdm-project/setup-pdm@v2
+
+    - name: "Update dependencies"
+      run: pdm update --no-sync --update-${{ inputs.update-strategy }}
+
+    - id: detect-changes
+      run: |
+        if [[ `git status --porcelain` ]]; then
+          echo "::set-output name=changed::true"
+        else
+          echo "::set-output name=changed::false"
+        fi
+
+    - name: "Commit changes"
+      if: steps.detect-changes.outputs.changed == 'true'
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: ${{ inputs.commit-message }}
+        new-branch: dep/update-pdm-lock
+
+    - name: "Create PR"
+      if: steps.detect-changes.outputs.changed == 'true'
+      run: gh pr create --title "${{ inputs.pr-title }}" --body "Update pdm.lock" --head dep/update-pdm-lock
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+
+branding:
+  icon: "code"
+  color: "green"
