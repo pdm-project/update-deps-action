@@ -41,11 +41,11 @@ runs:
       uses: EndBug/add-and-commit@v9
       with:
         message: ${{ inputs.commit-message }}
-        new-branch: dep/update-pdm-lock
+        new_branch: dep/update-pdm-lock
 
     - name: "Create PR"
       if: steps.detect-changes.outputs.changed == 'true'
-      run: gh pr create --title "${{ inputs.pr-title }}" --body "Update pdm.lock" --head dep/update-pdm-lock
+      run: gh pr create --title "${{ inputs.pr-title }}" --body "Update pdm.lock" --head dep/update-pdm-lock || true
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
