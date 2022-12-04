@@ -31,15 +31,16 @@ runs:
       shell: bash
       run: |
         if [[ `git status --porcelain` ]]; then
-          echo "::set-output name=changed::true"
+          echo "changed=true" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=changed::false"
+          echo "changed=false" >> $GITHUB_OUTPUT
         fi
 
     - name: "Commit changes"
       if: steps.detect-changes.outputs.changed == 'true'
       uses: EndBug/add-and-commit@v9
       with:
+        add: pyproject.toml pdm.lock
         message: ${{ inputs.commit-message }}
         new_branch: dep/update-pdm-lock
 
