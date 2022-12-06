@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Update dependencies
-        uses: pdm-project/update-deps-action@v1
+        uses: pdm-project/update-deps-action@main
 ```
 
 ## Inputs
