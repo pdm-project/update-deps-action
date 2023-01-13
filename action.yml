@@ -43,7 +43,7 @@ runs:
         add: pyproject.toml pdm.lock
         message: ${{ inputs.commit-message }}
         new_branch: dep/update-pdm-lock
-        push: --force
+        push: origin dep/update-pdm-lock --set-upstream --force
 
     - name: "Create PR"
       if: steps.detect-changes.outputs.changed == 'true'
