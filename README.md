@@ -33,4 +33,6 @@ with:
   pr-title: "Update dependencies"
   # The update strategy, can be 'reuse', 'eager' or 'all'
   update-strategy: eager
+  # Whether to install PDM plugins before update
+  install-plugins: "false"
 ```
