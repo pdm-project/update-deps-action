@@ -17,11 +17,19 @@ inputs:
     description: "The update strategy, can be 'reuse', 'eager' or 'all'"
     required: false
     default: "reuse"
+  install-plugins:
+    description: "Whether install PDM plugins before update"
+    required: false
+    default: "false"
 
 runs:
   using: "composite"
   steps:
     - uses: pdm-project/setup-pdm@v3
+
+    - name: Install plugins
+      if: inputs.install-plugins == "true"
+      run: pdm install --plugins
 
     - name: "Update dependencies"
       run: pdm update --no-sync --update-${{ inputs.update-strategy }}
