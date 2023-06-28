@@ -28,7 +28,7 @@ runs:
     - uses: pdm-project/setup-pdm@v3
 
     - name: Install plugins
-      if: inputs.install-plugins == "true"
+      if: inputs.install-plugins == 'true'
       run: pdm install --plugins
       shell: bash
 
