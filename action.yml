@@ -30,6 +30,7 @@ runs:
     - name: Install plugins
       if: inputs.install-plugins == "true"
       run: pdm install --plugins
+      shell: bash
 
     - name: "Update dependencies"
       run: pdm update --no-sync --update-${{ inputs.update-strategy }}
