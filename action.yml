@@ -49,7 +49,6 @@ runs:
       if: steps.detect-changes.outputs.changed == 'true'
       uses: EndBug/add-and-commit@v9
       with:
-        add: pyproject.toml pdm.lock
         message: ${{ inputs.commit-message }}
         new_branch: dep/update-pdm-lock
         push: origin dep/update-pdm-lock --set-upstream --force
