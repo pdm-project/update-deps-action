@@ -50,7 +50,7 @@ runs:
         fi
 
     - name: "Commit changes"
-      if: steps.detect-changes.outputs.changed == 'true' && sign-off-commit == 'true'
+      if: steps.detect-changes.outputs.changed == 'true' && inputs.sign-off-commit == 'true'
       uses: EndBug/add-and-commit@v9
       with:
         commit: --signoff
