@@ -59,7 +59,7 @@ runs:
         push: origin dep/update-pdm-lock --set-upstream --force
 
     - name: "Commit changes"
-      if: steps.detect-changes.outputs.changed == 'true'
+      if: steps.detect-changes.outputs.changed == 'true' && inputs.sign-off-commit == 'false'
       uses: EndBug/add-and-commit@v9
       with:
         message: ${{ inputs.commit-message }}
