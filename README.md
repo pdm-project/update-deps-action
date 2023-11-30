@@ -35,4 +35,6 @@ with:
   update-strategy: eager
   # Whether to install PDM plugins before update
   install-plugins: "false"
+  # Whether commit message contains signed-off-by
+  sign-off-commit: "false"
 ```
