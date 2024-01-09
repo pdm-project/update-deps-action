@@ -25,6 +25,14 @@ inputs:
     description: "Whether commit message contains signed-off-by"
     required: false
     default: "false"
+  export-reqs:
+    description: "Whether pdm will export requirements.txt"
+    required: false
+    default: "false"
+  export-reqs-args:
+    description: "Arguments to pdm for requirements.txt export"
+    required: false
+    default: "-o requirements.txt --without-hashes"
 
 runs:
   using: "composite"
@@ -38,6 +46,11 @@ runs:
 
     - name: "Update dependencies"
       run: pdm update --no-sync --update-${{ inputs.update-strategy }}
+      shell: bash
+
+    - name: "Export dependencies"
+      if: inputs.export-reqs == 'true'
+      run: pdm export ${{ inputs.export-reqs-args }}
       shell: bash
 
     - id: detect-changes
