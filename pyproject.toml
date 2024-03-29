@@ -1,0 +1,29 @@
+[project]
+name = "pdm-update-action"
+description = "The plugin for PDM update action"
+authors = [
+    {name = "Frost Ming", email = "me@frostming.com"},
+]
+dependencies = []
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+dynamic = ["version"]
+
+[project.entry-points.pdm]
+update_action = "pdm_update_action:UpdateSummarizer"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.version]
+source = "scm"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pdm>=2.13.0",
+]
