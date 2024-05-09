@@ -33,6 +33,8 @@ with:
   pr-title: "Update dependencies"
   # The update strategy, can be 'reuse', 'eager' or 'all'
   update-strategy: eager
+  # The save strategy, can 'compatible', 'wildcard', 'exact' or 'minimum'
+  save-strategy: compatible
   # Ignore the version constraint of packages in pyproject.toml
   unconstrained: true
   # Whether to install PDM plugins before update
