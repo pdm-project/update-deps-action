@@ -33,6 +33,8 @@ with:
   pr-title: "Update dependencies"
   # The update strategy, can be 'reuse', 'eager' or 'all'
   update-strategy: eager
+  # Ignore the version constraint of packages in pyproject.toml
+  unconstrained: true
   # Whether to install PDM plugins before update
   install-plugins: "false"
   # Whether commit message contains signed-off-by
