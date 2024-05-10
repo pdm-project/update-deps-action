@@ -17,6 +17,10 @@ inputs:
     description: "The update strategy, can be 'reuse', 'eager' or 'all'"
     required: false
     default: "reuse"
+  unconstrained:
+    description: "Ignore the version constraint of packages in pyproject.toml"
+    required: false
+    default: "false"
   install-plugins:
     description: "Whether install PDM plugins before update"
     required: false
@@ -41,7 +45,7 @@ runs:
       shell: bash
 
     - name: "Update dependencies"
-      run: pdm update --no-sync --update-${{ inputs.update-strategy }}
+      run: pdm update --no-sync --update-${{ inputs.update-strategy }} ${{ inputs.unconstrained == 'true' && '--unconstrained' || '' }}
       shell: bash
       id: pdm-update
 
