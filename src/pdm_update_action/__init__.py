@@ -33,7 +33,7 @@ def set_multiline_output(name, value):
 
 
 class UpdateSummarizer:
-    before_candidates: dict[str, Candidate]
+    before_candidates: dict[str, list[Candidate]]
 
     def __init__(self, core: Core) -> None:
         from pdm.signals import post_lock, pre_lock
@@ -59,15 +59,15 @@ class UpdateSummarizer:
 
         for name, after in after_candidates.items():
             before = before_candidates.pop(name, None)
-            if before is None:
+            if not before:
                 rows.append(
                     SummaryRow(
                         Sign.NEW, name, None, after.version or after.link.redacted
                     )
                 )
             else:
-                before_version = before.version or before.link.redacted
-                after_version = after.version or after.link.redacted
+                before_version = before[0].version or before[0].link.redacted
+                after_version = after[0].version or after[0].link.redacted
                 if before_version != after_version:
                     rows.append(
                         SummaryRow(Sign.UPDATE, name, before_version, after_version)
@@ -76,7 +76,10 @@ class UpdateSummarizer:
         for name, before in before_candidates.items():
             rows.append(
                 SummaryRow(
-                    Sign.REMOVE, name, before.version or before.link.redacted, None
+                    Sign.REMOVE,
+                    name,
+                    before[0].version or before[0].link.redacted,
+                    None,
                 )
             )
 

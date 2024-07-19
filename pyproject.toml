@@ -22,5 +22,5 @@ distribution = true
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "pdm>=2.13.0",
+    "pdm>=2.17.0",
 ]
