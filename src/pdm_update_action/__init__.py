@@ -49,11 +49,11 @@ class UpdateSummarizer:
 
     def before_lock(self, project: Project, **_kwds: Any) -> None:
         """Hook before locking the project."""
-        self.before_candidates = project.locked_repository.all_candidates
+        self.before_candidates = project.get_locked_repository().all_candidates
 
     def get_update_summary(self, project: Project) -> str:
         """Get the update summary message."""
-        after_candidates = project.locked_repository.all_candidates
+        after_candidates = project.get_locked_repository().all_candidates
         before_candidates = self.before_candidates
         rows: list[SummaryRow] = []
 
@@ -62,7 +62,7 @@ class UpdateSummarizer:
             if not before:
                 rows.append(
                     SummaryRow(
-                        Sign.NEW, name, None, after.version or after.link.redacted
+                        Sign.NEW, name, None, after[0].version or after[0].link.redacted
                     )
                 )
             else:
