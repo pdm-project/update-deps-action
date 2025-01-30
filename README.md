@@ -41,4 +41,6 @@ with:
   install-plugins: "false"
   # Whether commit message contains signed-off-by
   sign-off-commit: "false"
+  # Sign commits as github-actions[bot]
+  sign-commits: "true"
 ```
