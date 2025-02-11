@@ -33,11 +33,15 @@ inputs:
     description: "Whether commit message contains signed-off-by"
     required: false
     default: "false"
+  sign-commits:
+    description: "Sign commits as github-actions[bot]"
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
   steps:
-    - uses: pdm-project/setup-pdm@v4
+    - uses: pdm-project/setup-pdm@b2472ca4258a9ea3aee813980a0100a2261a42fc # v4.2
 
     - name: Install the action plugin
       run: pdm self add ${{ github.action_path }}
@@ -64,13 +68,14 @@ runs:
 
     - name: Create Pull Request
       if: steps.detect-changes.outputs.changed == 'true'
-      uses: peter-evans/create-pull-request@v6
+      uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       with:
         token: ${{ inputs.token }}
         commit-message: ${{ inputs.commit-message }}
         signoff: ${{ inputs.sign-off-commit }}
+        sign-commits: ${{ inputs.sign-commits }}
         branch: dep/update-pdm-lock
         delete-branch: true
         title: ${{ inputs.pr-title }}
