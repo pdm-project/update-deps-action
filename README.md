@@ -44,3 +44,13 @@ with:
   # Sign commits as github-actions[bot]
   sign-commits: "true"
 ```
+
+## Outputs
+
+```yaml
+outputs:
+  # The pull request number
+  pull-request-number:
+  # The URL of the pull request
+  pull-request-url:
+```

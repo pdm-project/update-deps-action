@@ -38,6 +38,14 @@ inputs:
     required: false
     default: "true"
 
+outputs:
+  pull-request-number:
+    description: 'The pull request number'
+    value: ${{ steps.change.outputs.pull-request-number }}
+  pull-request-url:
+    description: 'The URL of the pull request.'
+    value: ${{ steps.change.outputs.pull-request-url }}
+
 runs:
   using: "composite"
   steps:
@@ -62,13 +70,16 @@ runs:
       run: |
         if [[ `git status --porcelain` ]]; then
           echo "changed=true" >> $GITHUB_OUTPUT
+          echo "Dependency updates required ✅"
         else
           echo "changed=false" >> $GITHUB_OUTPUT
+          echo "No dependency updates required 💬"
         fi
 
     - name: Create Pull Request
       if: steps.detect-changes.outputs.changed == 'true'
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+      id: change
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       with:
